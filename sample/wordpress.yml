@@ -6,12 +6,12 @@ apiVersion: v1
 kind: Pod
 metadata:
   annotations:
-    io.kubernetes.cri-o.SandboxID/db: b1272fb99a19b898a0b34711b15a62674b894607c6352d5c81344d7bcac0fb81
-    io.kubernetes.cri-o.SandboxID/wordpress: b1272fb99a19b898a0b34711b15a62674b894607c6352d5c81344d7bcac0fb81
-  creationTimestamp: "2025-06-19T18:00:27Z"
+    io.kubernetes.cri-o.SandboxID/app: 9b2c5234f57f3021e9b7186d7180f173a3a4bbe8b447e0976ef5b41a91bb7d31
+    io.kubernetes.cri-o.SandboxID/db: 9b2c5234f57f3021e9b7186d7180f173a3a4bbe8b447e0976ef5b41a91bb7d31
+  creationTimestamp: "2025-06-19T18:08:54Z"
   labels:
-    app: wordpress-pod
-  name: wordpress-pod
+    app: wordpress
+  name: wordpress
 spec:
   containers:
   - args:
@@ -19,14 +19,14 @@ spec:
     env:
     - name: MARIADB_PASSWORD
       value: w0rdpr3ss
-    - name: MARIADB_USER
-      value: wordpress
+    - name: NO_PROXY
+      value: local,169.254/16
     - name: MARIADB_ROOT_PASSWORD
       value: passw0rd
     - name: MARIADB_DATABASE
       value: wordpress
-    - name: NO_PROXY
-      value: local,169.254/16
+    - name: MARIADB_USER
+      value: wordpress
     image: docker.io/library/mariadb:lts-ubi
     name: db
     ports:
@@ -35,7 +35,7 @@ spec:
     securityContext: {}
     volumeMounts:
     - mountPath: /var/lib/mysql
-      name: 982da85fd0bd6c7ffc6cbe399b68888033ebebb95bd7580d6768d3434b4288b6-pvc
+      name: 2d975932868848c9ff6d1bf5c9b2b17080b0aac9828b4ca0d5de0f94e923d94f-pvc
   - args:
     - apache2-foreground
     env:
@@ -43,22 +43,22 @@ spec:
       value: local,169.254/16
     - name: WORDPRESS_DB_USER
       value: wordpress
+    - name: WORDPRESS_DB_PASSWORD
+      value: w0rdpr3ss
     - name: WORDPRESS_DB_HOST
       value: db
     - name: WORDPRESS_DB_NAME
       value: wordpress
-    - name: WORDPRESS_DB_PASSWORD
-      value: w0rdpr3ss
     image: docker.io/library/wordpress:latest
-    name: wordpress
+    name: app
     volumeMounts:
     - mountPath: /var/www/html
-      name: 85b442e55f8c1a847df7a75c2c964051ca5333af424a3b309aad5f82fb448be2-pvc
+      name: 74c0fc4d3a4fd00e76a40b4dc8a18d3f793b0ba56b2049b5a6d2f28110e3c675-pvc
   volumes:
-  - name: 982da85fd0bd6c7ffc6cbe399b68888033ebebb95bd7580d6768d3434b4288b6-pvc
+  - name: 2d975932868848c9ff6d1bf5c9b2b17080b0aac9828b4ca0d5de0f94e923d94f-pvc
     persistentVolumeClaim:
-      claimName: 982da85fd0bd6c7ffc6cbe399b68888033ebebb95bd7580d6768d3434b4288b6
-  - name: 85b442e55f8c1a847df7a75c2c964051ca5333af424a3b309aad5f82fb448be2-pvc
+      claimName: 2d975932868848c9ff6d1bf5c9b2b17080b0aac9828b4ca0d5de0f94e923d94f
+  - name: 74c0fc4d3a4fd00e76a40b4dc8a18d3f793b0ba56b2049b5a6d2f28110e3c675-pvc
     persistentVolumeClaim:
-      claimName: 85b442e55f8c1a847df7a75c2c964051ca5333af424a3b309aad5f82fb448be2
+      claimName: 74c0fc4d3a4fd00e76a40b4dc8a18d3f793b0ba56b2049b5a6d2f28110e3c675
 

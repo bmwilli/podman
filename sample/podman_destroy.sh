@@ -1,5 +1,5 @@
 #!/bin/bash
-PODNAME=wordpress-pod
+PODNAME=wordpress
 
 podman pod stop $PODNAME
 podman pod rm $PODNAME

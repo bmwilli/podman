@@ -2,7 +2,7 @@
 
 # This is how I usually get started with a pod.
 
-PODNAME=wordpress-pod
+PODNAME=wordpress
 
 podman pod create \
   -p 80:80 \
@@ -19,7 +19,7 @@ podman run -d \
 
 podman run -d \
   --pod $PODNAME \
-  --name wordpress \
+  --name app \
   --env WORDPRESS_DB_HOST="db" \
   --env WORDPRESS_DB_NAME="wordpress" \
   --env WORDPRESS_DB_USER="wordpress" \

@@ -1,4 +1,4 @@
 #!/bin/bash
-PODNAME=wordpress-pod
+PODNAME=wordpress
 
 podman kube play $PODNAME.yml
